@@ -1,0 +1,2 @@
+# MyChat
+Simple Lan chat
