@@ -43,15 +43,17 @@ bool DataBase::AddUser(const QString &nickname, const QString &login, const QStr
   {
     if(!nickname.isEmpty() && !login.isEmpty() && !paswd.isEmpty())
     {
-      QString tmp = (char*)this->hash(paswd);
       QSqlQuery query;
       query.prepare("INSERT INTO users (nickname, login, paswd) VALUES (:nickname, :login, :paswd)");
       query.bindValue(":nickname", nickname);
       query.bindValue(":login", login);
-      query.bindValue(":paswd", tmp);
+      query.bindValue(":paswd", this->hash(paswd));
 
       if(query.exec())
+      {
+        qDebug() << "User Added to Data Base" << endl;
         success = true;
+      }
       else
         qDebug() << "add user failed: " << query.lastError();
     }
@@ -61,10 +63,11 @@ bool DataBase::AddUser(const QString &nickname, const QString &login, const QStr
   return success;
 }
 
-size_t DataBase::hash(const QString& str)
+QString DataBase::hash(const QString& str)
 {
+  QString answer;
   std::string tmp1 = str.toUtf8().constData(); // qstring to std::string
   const char* tmp2 = tmp1.c_str(); // std::string to char*
   size_t precision = 2;
-  return (*(size_t*)tmp2) >> precision; // i got no idea what i'm doing here:)
+  return answer.fromStdString(std::to_string((*(size_t*)tmp2) >> precision)); // i got no idea what i'm doing here:)
 }
