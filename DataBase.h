@@ -11,9 +11,14 @@ class DataBase
 {
 public:
   DataBase(const QString& servername, const QString& dbname);
-  ~DataBase();
+
   bool ExistsUser(const QString& nickname);
+
   bool AddUser(const QString& nickname, const QString& login, const QString& paswd);
+
+  size_t hash(const QString& str);
+
+  ~DataBase();
 private:
   QSqlDatabase Db;
 };
