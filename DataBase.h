@@ -16,7 +16,7 @@ public:
 
   bool AddUser(const QString& nickname, const QString& login, const QString& paswd);
 
-  size_t hash(const QString& str);
+  QString hash(const QString& str);
 
   ~DataBase();
 private:
