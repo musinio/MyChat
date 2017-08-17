@@ -43,11 +43,12 @@ bool DataBase::AddUser(const QString &nickname, const QString &login, const QStr
   {
     if(!nickname.isEmpty() && !login.isEmpty() && !paswd.isEmpty())
     {
+      QString tmp = (char*)this->hash(paswd);
       QSqlQuery query;
       query.prepare("INSERT INTO users (nickname, login, paswd) VALUES (:nickname, :login, :paswd)");
       query.bindValue(":nickname", nickname);
       query.bindValue(":login", login);
-      query.bindValue(":paswd", paswd);
+      query.bindValue(":paswd", tmp);
 
       if(query.exec())
         success = true;
@@ -60,3 +61,10 @@ bool DataBase::AddUser(const QString &nickname, const QString &login, const QStr
   return success;
 }
 
+size_t DataBase::hash(const QString& str)
+{
+  std::string tmp1 = str.toUtf8().constData(); // qstring to std::string
+  const char* tmp2 = tmp1.c_str(); // std::string to char*
+  size_t precision = 2;
+  return (*(size_t*)tmp2) >> precision; // i got no idea what i'm doing here:)
+}
