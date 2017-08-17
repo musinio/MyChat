@@ -1,6 +1,4 @@
 #include "DataBase.h"
-#define PRECISION 2
-
 DataBase::DataBase(const QString& servername, const QString& dbname)
 {
   Db = QSqlDatabase::addDatabase("QPSQL");
@@ -67,5 +65,9 @@ bool DataBase::AddUser(const QString &nickname, const QString &login, const QStr
 
 QString DataBase::hash(const QString& str)
 {
-  return QString::fromStdString(std::to_string((*(size_t*)str.toUtf8().constData().c_str()) >> PRECISION)); // i got no idea what i'm doing here:)
+  QString answer;
+  std::string tmp1 = str.toUtf8().constData(); // qstring to std::string
+  const char* tmp2 = tmp1.c_str(); // std::string to char*
+  size_t precision = 2;
+  return answer.fromStdString(std::to_string((*(size_t*)tmp2) >> precision)); // i got no idea what i'm doing here:)
 }
