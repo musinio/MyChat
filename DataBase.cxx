@@ -1,7 +1,7 @@
 #include "DataBase.h"
 DataBase::DataBase(const QString& servername, const QString& dbname)
 {
-  QSqlDatabase Db = QSqlDatabase::addDatabase("QPSQL");
+  Db = QSqlDatabase::addDatabase("QPSQL");
   Db.setHostName(servername);
   Db.setDatabaseName(dbname);
 
