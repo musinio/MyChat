@@ -10,31 +10,9 @@
 class DataBase
 {
 public:
-
-  /**
-   * @brief DataBase = открывает бд
-   * @param path = абсолютный путь к бд файлу
-   */
   DataBase(const QString& servername, const QString& dbname);
-
-  /**
-   *@breif DataBase
-   * деструктор
-   */
   ~DataBase();
-
-  /**
-   * @brief ExistsUser = проверка существования юзера
-   * @param nickname = никнейм
-   */
   bool ExistsUser(const QString& nickname);
-
-  /**
-   * @brief AddUser = добавить нового пользователя
-   * @param nickname = никнейм
-   * @param login = логин
-   * @param paswd = пароль
-   */
   bool AddUser(const QString& nickname, const QString& login, const QString& paswd);
 private:
   QSqlDatabase Db;
